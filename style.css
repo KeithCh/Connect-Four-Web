@@ -7,7 +7,7 @@ body {
   background-color:	#1979a9;
   display: inline-block;
   border-radius: 25px;
-  border: solid black;
+  border: solid #0a567c;
 }
 
 .col {
@@ -17,4 +17,8 @@ body {
   border-radius: 50%;
   background-color: lightgray;
   margin: 5px;
+}
+
+.next-red {
+  background-color: rgb(240, 143, 143);
 }
