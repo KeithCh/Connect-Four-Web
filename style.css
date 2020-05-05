@@ -5,15 +5,19 @@ body {
 
 #connect4 {
   background-color:	#1979a9;
-  display: inline-block;
   border-radius: 25px;
-  border: solid black;
+  border: solid #0a567c;
+  display: block;
+  display: inline-block;
 }
 
 .col {
+  display: inline-block;
+}
+
+.row {
   width: 100px;
   height: 100px;
-  display: inline-block;
   border-radius: 50%;
   background-color: lightgray;
   margin: 5px;
