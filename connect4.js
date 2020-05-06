@@ -55,7 +55,9 @@ class Connect4 {
       $lastEmptyCell.addClass(that.player);
 
       if (that.checkForWinner()){
-        console.log('connect 4');
+        console.log(`'${that.player} has won!`);
+        $board.empty();
+        new Menu('#menu');
       }
       that.player = (that.player === 'red') ? 'yellow' : 'red';
       $(this).trigger('mouseenter');
