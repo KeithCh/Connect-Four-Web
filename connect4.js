@@ -54,8 +54,9 @@ class Connect4 {
       $lastEmptyCell.removeClass(`empty next-${that.player}`);
       $lastEmptyCell.addClass(that.player);
 
-      const winner = that.checkForWinner();
-
+      if (that.checkForWinner()){
+        console.log('connect 4');
+      }
       that.player = (that.player === 'red') ? 'yellow' : 'red';
       $(this).trigger('mouseenter');
     });
@@ -63,19 +64,16 @@ class Connect4 {
 
   checkForWinner(){
     const cells = $(`.col`);
-    if (this.checkHorizontal(cells) || this.checkVertical(cells)) { //this.checkDiagonal(cells)) {
-    }
-    return '';
+    return this.checkHorizontal(cells) || this.checkVertical(cells) || this.checkDiagonal(cells); 
   }
 
   checkHorizontal(cells) {
     for (let y = 0; y < 6; y++) {
       for (let x = 0; x < 4; x++) { 
-        if ($(cells[7*y + x]).attr('class') == `col ${this.player}` 
-          && $(cells[7*y + x + 1]).attr('class') == `col ${this.player}`
-          && $(cells[7*y + x + 2]).attr('class') == `col ${this.player}`
-          && $(cells[7*y + x + 3]).attr('class') == `col ${this.player}`) {
-            console.log('connect 4');
+        if ($(cells[7*y + x]).attr('class') === `col ${this.player}` 
+          && $(cells[7*y + x + 1]).attr('class') === `col ${this.player}`
+          && $(cells[7*y + x + 2]).attr('class') === `col ${this.player}`
+          && $(cells[7*y + x + 3]).attr('class') === `col ${this.player}`) {
             return true;
         }
       }
@@ -85,17 +83,38 @@ class Connect4 {
   
   checkVertical(cells) {
     for (let y = 0; y < 3; y++) {
-      for (let x = 0; x < 6; x++) {
-        console.log([$(cells[7*y + x]).attr('class'), $(cells[7*y + x + 7]).attr('class'), $(cells[7*y + x + 14]).attr('class'), $(cells[7*y + x + 21]).attr('class')]);       
-        if ($(cells[7*y + x]).attr('class') == `col ${this.player}` 
-          && $(cells[7*y + x + 7]).attr('class') == `col ${this.player}`
-          && $(cells[7*y + x + 14]).attr('class') == `col ${this.player}`
-          && $(cells[7*y + x + 21]).attr('class') == `col ${this.player}`) {
-            console.log('connect 4');
+      for (let x = 0; x < 6; x++) {      
+        if ($(cells[7*y + x]).attr('class') === `col ${this.player}` 
+          && $(cells[7*y + x + 7]).attr('class') === `col ${this.player}`
+          && $(cells[7*y + x + 14]).attr('class') === `col ${this.player}`
+          && $(cells[7*y + x + 21]).attr('class') === `col ${this.player}`) {
             return true;
         }
       }
     }
     return false;
+  }
+  checkDiagonal(cells) {
+    for (let y = 0; y < 3; y++) {
+      for (let x = 0; x < 4; x++) {      
+        if ($(cells[7*y + x]).attr('class') === `col ${this.player}` 
+          && $(cells[7*y + x + 8]).attr('class') === `col ${this.player}`
+          && $(cells[7*y + x + 16]).attr('class') === `col ${this.player}`
+          && $(cells[7*y + x + 24]).attr('class') === `col ${this.player}`) {
+            return true;
+        }
+      }
+    }
+    for (let y = 0; y < 3; y++) {
+      for (let x = 3; x < 7; x++) {      
+        // console.log([$(cells[7*y + x]).attr('class'), $(cells[7*y + x + 6]).attr('class'), $(cells[7*y + x + 12]).attr('class'), $(cells[7*y + x + 18]).attr('class')]);
+        if ($(cells[7*y + x]).attr('class') === `col ${this.player}` 
+          && $(cells[7*y + x + 6]).attr('class') === `col ${this.player}`
+          && $(cells[7*y + x + 12]).attr('class') === `col ${this.player}`
+          && $(cells[7*y + x + 18]).attr('class') === `col ${this.player}`) {
+            return true;
+        }
+      }
+    }
   }
 }
