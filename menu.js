@@ -18,7 +18,7 @@ class Menu{
     const $menu = $(this.selector);
     $menu.on('click', '.twoPbutton', function() {
       $menu.empty();
-      new Connect4('#connect4');
+      connect4.createGrid();
     });
   }
 }

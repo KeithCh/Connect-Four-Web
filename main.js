@@ -1,3 +1,4 @@
 $(document).ready(function() {
-  const menu = new Menu('#menu');
+  menu = new Menu('#menu');
+  connect4 = new Connect4('#connect4');
 });

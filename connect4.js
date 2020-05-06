@@ -3,7 +3,6 @@ class Connect4 {
     this.NUMROWS = 6;
     this.NUMCOLS = 7;
     this.selector = selector;
-    this.createGrid();
     this.setupEventListeners();
     this.player = 'red';
   }
@@ -57,7 +56,7 @@ class Connect4 {
       if (that.checkForWinner()){
         console.log(`'${that.player} has won!`);
         $board.empty();
-        new Menu('#menu');
+        menu.setupMenu();
       }
       that.player = (that.player === 'red') ? 'yellow' : 'red';
       $(this).trigger('mouseenter');
