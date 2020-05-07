@@ -34,9 +34,10 @@ class Menu{
     $buttons.on('click', '.timedButton', function() {
       $menuText.empty();
       $buttons.empty();
+      connect4.changeMode('timed');
       connect4.createGrid();
       connect4.createGameButtons();
-      connect4.changeMode('timed');
+      timer.setupTimer();
     });
   }
 }

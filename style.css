@@ -1,6 +1,6 @@
 body {
   text-align: center;
-  background-color: lightgray;
+  background-color: rgb(233, 233, 233);
 }
 
 #connect4 {
@@ -19,7 +19,7 @@ body {
   height: 100px;
   display: inline-block;
   border-radius: 50%;
-  background-color: lightgray;
+  background-color: rgb(233, 233, 233);
   margin: 5px;
 }
 
