@@ -5,10 +5,24 @@ class Connect4 {
     this.selector = selector;
     this.setupEventListeners();
     this.player = 'red';
+    this.player1 = 'red';
+    this.mode = '2p';
   }
-
+  changeMode(mode) {
+    this.mode = mode;
+  }
   createGrid() {
     const $board = $(this.selector);
+    const $gameInstruction = $(gameInstruction);
+    if (this.mode !== '2p') {
+      if (this.player1 === this.player) {
+        $gameInstruction.append(`Your turn (${this.player1})`)
+      }
+      else {
+        $gameInstruction.append('AI is thinking...');
+      }
+    }
+    else $gameInstruction.append(`${this.player}'s turn`);
     for (let row = 0; row < this.NUMROWS; row++) {
       const $row = $('<div>')
         .addClass('row');
@@ -22,6 +36,7 @@ class Connect4 {
       $board.append($row);
     }
   }
+
   setupEventListeners(){
     const $board = $(this.selector);
     const that = this;
@@ -48,18 +63,29 @@ class Connect4 {
 
     $board.on('click', '.col.empty', function() {
       const col = $(this).data('col-idx');
-      const row = $(this).data('row-idx');
       const $lastEmptyCell = findLastEmptyCell(col);
       $lastEmptyCell.removeClass(`empty next-${that.player}`);
       $lastEmptyCell.addClass(that.player);
-
+      const $gameInstruction = $('#gameInstruction');
       if (that.checkForWinner()){
-        console.log(`'${that.player} has won!`);
-        $board.empty();
-        menu.setupMenu();
+        const $board = $(that.selector);
+        $gameInstruction.text(`${that.player} has won!`)
+        // $board.empty();
+        // $gameInstruction.empty();
+        // menu.setupMenu();
+        return;
       }
       that.player = (that.player === 'red') ? 'yellow' : 'red';
-      $(this).trigger('mouseenter');
+      if (that.mode != '2p') {
+        if (that.player1 === that.player) {
+          $gameInstruction.text(`Your turn (${that.player1})`);
+        }
+        else {
+          $gameInstruction.text('AI is thinking...');
+        }
+      }
+      else $gameInstruction.text(`${that.player}'s turn`);
+      $(that).trigger('mouseenter');
     });
   }
 

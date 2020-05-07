@@ -5,19 +5,33 @@ class Menu{
     this.setupEventListeners();
   }
   setupMenu() {
-    const $menu = $(this.selector);
+    const $menuText = $('#menuText');
+    const $buttons = $('#buttons');
     const title = $('<h1>Connect 4</h1>');
-    $menu.append(title);
+
+    $menuText.append(title);
     const instruction = $('<h2>Choose a gamemode:</h2>');
-    $menu.append(instruction);
-    const twoPButton = $('<button type="button">Click Me!</button>')
+    $menuText.append(instruction);
+    const twoPButton = $('<button type="button">2 Players</button>')
       .addClass('twoPbutton');
-    $menu.append(twoPButton);
+    $buttons.append(twoPButton);
+    const easyAI = $('<button type="Easy AI">Easy AI</button>')
+      .addClass('easyAI');
+    $buttons.append(easyAI);
   }
   setupEventListeners() {
-    const $menu = $(this.selector);
-    $menu.on('click', '.twoPbutton', function() {
-      $menu.empty();
+    const $menuText = $('#menuText');
+    const $buttons = $('#buttons');
+    $buttons.on('click', '.twoPbutton', function() {
+      $menuText.empty();
+      $buttons.empty();
+      connect4.changeMode('2p');
+      connect4.createGrid();
+    });
+    $buttons.on('click', '.easyAI', function() {
+      $menuText.empty();
+      $buttons.empty();
+      connect4.changeMode('easy');
       connect4.createGrid();
     });
   }
