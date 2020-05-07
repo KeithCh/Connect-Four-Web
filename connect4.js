@@ -6,11 +6,16 @@ class Connect4 {
     this.setupEventListeners();
     this.player = 'red';
     this.player1 = 'red';
+
+  }
+  changeMode(mode) {
+    this.mode = mode;
   }
   createGrid() {
     const $board = $(this.selector);
     const $gameInstruction = $(gameInstruction);
     $gameInstruction.append(`${this.player}'s turn`);
+
     for (let row = 0; row < this.NUMROWS; row++) {
       const $row = $('<div>')
         .addClass('row');
@@ -60,6 +65,7 @@ class Connect4 {
       const $lastEmptyCell = findLastEmptyCell(col);
       $lastEmptyCell.removeClass(`empty next-${that.player}`);
       $lastEmptyCell.addClass(that.player);
+      const $gameInstruction = $('#gameInstruction');
       if (that.checkForWinner()){
         const $board = $(that.selector);
         $gameInstruction.text(`${that.player} has won!`)
