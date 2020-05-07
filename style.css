@@ -1,5 +1,4 @@
 body {
-  margin-top: 7%;
   text-align: center;
   background-color: lightgray;
 }
@@ -42,4 +41,26 @@ body {
 
 .next-yellow {
   background-color: rgb(255, 238, 139);
+}
+
+#menuText{
+  padding-top: 15%;
+}
+
+#menuText:empty{
+  padding-top: 3%;
+}
+
+#restartButton{
+  margin-top: 10px;
+}
+
+#restartButton:empty{
+  display: none;
+}
+
+#game {
+  display: inline-block;
+  width: 800px;
+  text-align: center;
 }

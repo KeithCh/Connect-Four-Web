@@ -5,10 +5,12 @@ class Connect4 {
     this.selector = selector;
     this.setupEventListeners();
     this.player = 'red';
+    this.player1 = 'red';
   }
-
   createGrid() {
     const $board = $(this.selector);
+    const $gameInstruction = $(gameInstruction);
+    $gameInstruction.append(`${this.player}'s turn`);
     for (let row = 0; row < this.NUMROWS; row++) {
       const $row = $('<div>')
         .addClass('row');
@@ -22,8 +24,15 @@ class Connect4 {
       $board.append($row);
     }
   }
+  createRestartButton() {
+    const $restartButton = $(restartButton);
+    $restartButton.append('Restart');
+  }
+
   setupEventListeners(){
+    const $game = $('#game');
     const $board = $(this.selector);
+    const $gameInstruction = $('#gameInstruction');
     const that = this;
     function findLastEmptyCell(col) {
       const cells = $(`.col[data-col-idx='${col}']`);
@@ -48,18 +57,27 @@ class Connect4 {
 
     $board.on('click', '.col.empty', function() {
       const col = $(this).data('col-idx');
-      const row = $(this).data('row-idx');
       const $lastEmptyCell = findLastEmptyCell(col);
       $lastEmptyCell.removeClass(`empty next-${that.player}`);
       $lastEmptyCell.addClass(that.player);
-
       if (that.checkForWinner()){
-        console.log(`'${that.player} has won!`);
-        $board.empty();
-        menu.setupMenu();
+        const $board = $(that.selector);
+        $gameInstruction.text(`${that.player} has won!`)
+        // $board.empty();
+        // $gameInstruction.empty();
+        // menu.setupMenu();
+        return;
       }
       that.player = (that.player === 'red') ? 'yellow' : 'red';
-      $(this).trigger('mouseenter');
+      $gameInstruction.text(`${that.player}'s turn`);
+      $(that).trigger('mouseenter');
+    });
+
+    $game.on('click', '#restartButton', function() {
+      $board.empty();
+      $gameInstruction.empty();
+      that.createGrid();
+      console.log('hi');
     });
   }
 
