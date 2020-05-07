@@ -59,6 +59,14 @@ body {
   display: none;
 }
 
+#changeModeButton{
+  margin-top: 10px;
+}
+
+#changeModeButton:empty{
+  display: none;
+}
+
 #game {
   display: inline-block;
   width: 800px;

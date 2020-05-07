@@ -12,18 +12,31 @@ class Menu{
     $menuText.append(title);
     const instruction = $('<h2>Choose a gamemode:</h2>');
     $menuText.append(instruction);
-    const twoPButton = $('<button type="button">Play</button>')
-      .addClass('twoPbutton');
-    $buttons.append(twoPButton);
+    
+    const normalButton = $('<button type="button">Normal</button>')
+      .addClass('normalButton');
+    $buttons.append(normalButton);
+
+    const timedButton = $('<button type="button">Timed</button>')
+      .addClass('timedButton');
+    $buttons.append(timedButton);
   }
   setupEventListeners() {
     const $menuText = $('#menuText');
     const $buttons = $('#buttons');
-    $buttons.on('click', '.twoPbutton', function() {
+    $buttons.on('click', '.normalButton', function() {
       $menuText.empty();
       $buttons.empty();
       connect4.createGrid();
-      connect4.createRestartButton();
+      connect4.createGameButtons();
+    });
+
+    $buttons.on('click', '.timedButton', function() {
+      $menuText.empty();
+      $buttons.empty();
+      connect4.createGrid();
+      connect4.createGameButtons();
+      connect4.changeMode('timed');
     });
   }
 }

@@ -4,9 +4,9 @@ class Connect4 {
     this.NUMCOLS = 7;
     this.selector = selector;
     this.setupEventListeners();
-    this.player = 'red';
-    this.player1 = 'red';
-
+    this.player = 'Red';
+    this.player1 = 'Red';
+    this.mode = '';
   }
   changeMode(mode) {
     this.mode = mode;
@@ -29,9 +29,11 @@ class Connect4 {
       $board.append($row);
     }
   }
-  createRestartButton() {
+  createGameButtons() {
     const $restartButton = $(restartButton);
     $restartButton.append('Restart');
+    const $changeModeButton = $(changeModeButton);
+    $changeModeButton.append('Change Mode');
   }
 
   setupEventListeners(){
@@ -39,6 +41,8 @@ class Connect4 {
     const $board = $(this.selector);
     const $gameInstruction = $('#gameInstruction');
     const that = this;
+    const $restartButton = $(restartButton);
+    const $changeModeButton = $(changeModeButton);
     function findLastEmptyCell(col) {
       const cells = $(`.col[data-col-idx='${col}']`);
       for (let i = cells.length - 1; i > -1; i--) {
@@ -49,18 +53,7 @@ class Connect4 {
       }
       return null;
     }
-
-    $board.on('mouseenter', '.col.empty', function() {
-      const col = $(this).data('col-idx');
-      const $lastEmptyCell = findLastEmptyCell(col);
-      $lastEmptyCell.addClass(`next-${that.player}`);
-    });
-
-    $board.on('mouseleave', '.col', function() {
-      $('.col').removeClass(`next-${that.player}`);
-    });
-
-    $board.on('click', '.col.empty', function() {
+    function boardClick() {
       const col = $(this).data('col-idx');
       const $lastEmptyCell = findLastEmptyCell(col);
       $lastEmptyCell.removeClass(`empty next-${that.player}`);
@@ -69,21 +62,47 @@ class Connect4 {
       if (that.checkForWinner()){
         const $board = $(that.selector);
         $gameInstruction.text(`${that.player} has won!`)
-        // $board.empty();
-        // $gameInstruction.empty();
-        // menu.setupMenu();
+        $board.off("click", '.col.empty', boardClick);
         return;
       }
-      that.player = (that.player === 'red') ? 'yellow' : 'red';
+      that.player = (that.player === 'Red') ? 'Yellow' : 'Red';
       $gameInstruction.text(`${that.player}'s turn`);
       $(that).trigger('mouseenter');
-    });
+    }
+    function hoverCol() {
+      const col = $(this).data('col-idx');
+      const $lastEmptyCell = findLastEmptyCell(col);
+      $lastEmptyCell.addClass(`next-${that.player}`);
+    }
+    function hoverLeaveCol() {
+      $('.col').removeClass(`next-${that.player}`);
+    }
+
+    $board.on('mouseenter', '.col.empty', hoverCol);
+
+    $board.on('mouseleave', '.col', hoverLeaveCol);
+
+    $board.on('click', '.col.empty', boardClick);
 
     $game.on('click', '#restartButton', function() {
+      if (that.checkForWinner()) {
+        that.player1 = (that.player1 === 'Red') ? 'Yellow' : 'Red';
+        $board.on('mouseenter', '.col.empty', hoverCol);
+        $board.on('mouseleave', '.col', hoverLeaveCol);
+        $board.on('click', '.col.empty', boardClick);
+      }
+      that.player = that.player1;
       $board.empty();
       $gameInstruction.empty();
       that.createGrid();
-      console.log('hi');
+    });
+
+    $game.on('click', '#changeModeButton', function() {
+      $board.empty();
+      $gameInstruction.empty();
+      $changeModeButton.empty();
+      $restartButton.empty();
+      menu.setupMenu();
     });
   }
 
