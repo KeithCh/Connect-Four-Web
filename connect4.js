@@ -62,6 +62,8 @@ class Connect4 {
       if (that.checkForWinner()){
         const $board = $(that.selector);
         $gameInstruction.text(`${that.player} has won!`)
+        $board.off('mouseenter', '.col.empty', hoverCol);
+        $board.off('mouseleave', '.col', hoverLeaveCol);
         $board.off("click", '.col.empty', boardClick);
         return;
       }
@@ -79,9 +81,7 @@ class Connect4 {
     }
 
     $board.on('mouseenter', '.col.empty', hoverCol);
-
     $board.on('mouseleave', '.col', hoverLeaveCol);
-
     $board.on('click', '.col.empty', boardClick);
 
     $game.on('click', '#restartButton', function() {
@@ -91,13 +91,18 @@ class Connect4 {
         $board.on('mouseleave', '.col', hoverLeaveCol);
         $board.on('click', '.col.empty', boardClick);
       }
-      that.player = that.player1;
       $board.empty();
+      that.player = that.player1;
       $gameInstruction.empty();
       that.createGrid();
     });
 
     $game.on('click', '#changeModeButton', function() {
+      if (that.checkForWinner()) {
+        $board.on('mouseenter', '.col.empty', hoverCol);
+        $board.on('mouseleave', '.col', hoverLeaveCol);
+        $board.on('click', '.col.empty', boardClick);
+      }
       $board.empty();
       $gameInstruction.empty();
       $changeModeButton.empty();
