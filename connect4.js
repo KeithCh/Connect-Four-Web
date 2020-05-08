@@ -41,8 +41,8 @@ class Connect4 {
     const $board = $(this.selector);
     const $gameInstruction = $('#gameInstruction');
     const that = this;
-    const $restartButton = $(restartButton);
-    const $changeModeButton = $(changeModeButton);
+    const $restartButton = $('#restartButton');
+    const $changeModeButton = $('#changeModeButton');
     const $timer  = $('#timer');
     function findLastEmptyCell(col) {
       const cells = $(`.col[data-col-idx='${col}']`);
@@ -62,7 +62,7 @@ class Connect4 {
       const $gameInstruction = $('#gameInstruction');
       if (that.checkForWinner()){
         const $board = $(that.selector);
-        $gameInstruction.text(`${that.player} has won!`)
+        $gameInstruction.text(`${that.player} wins!`)
         $board.off('mouseenter', '.col.empty', hoverCol);
         $board.off('mouseleave', '.col', hoverLeaveCol);
         $board.off("click", '.col.empty', boardClick);
@@ -73,9 +73,11 @@ class Connect4 {
       that.player = (that.player === 'Red') ? 'Yellow' : 'Red';
       $gameInstruction.text(`${that.player}'s turn`);
       $(that).trigger('mouseenter');
-      clearInterval(timer.interval);
-      $timer.empty();
-      timer.setupTimer();
+      if (that.mode === 'timed') {
+        clearInterval(timer.interval);
+        $timer.empty();
+        timer.setupTimer();
+      }
     }
     function hoverCol() {
       const col = $(this).data('col-idx');
@@ -91,16 +93,18 @@ class Connect4 {
     $board.on('click', '.col.empty', boardClick);
 
     $game.on('click', '#restartButton', function() {
-      if (that.checkForWinner()) {
+      if (that.checkForWinner() || timer.zero) {
         that.player1 = (that.player1 === 'Red') ? 'Yellow' : 'Red';
         $board.on('mouseenter', '.col.empty', hoverCol);
         $board.on('mouseleave', '.col', hoverLeaveCol);
         $board.on('click', '.col.empty', boardClick);
       }
       $board.empty();
-      clearInterval(timer.interval);
-      $timer.empty();
-      timer.setupTimer();
+      if (that.mode === 'timed') {
+        clearInterval(timer.interval);
+        $timer.empty();
+        timer.setupTimer();
+      }
       that.player = that.player1;
       $gameInstruction.empty();
       that.createGrid();
@@ -120,6 +124,15 @@ class Connect4 {
       $restartButton.empty();
       menu.setupMenu();
     });
+  }
+
+  outOfTime(){
+    const $gameInstruction = $('#gameInstruction');
+    const $board = $(this.selector);
+    const loser = this.player;
+    const winner = (this.player === 'Red') ? 'Yellow' : 'Red';
+    $gameInstruction.text(`${loser} took too long. ${winner} wins!`)
+    $board.off();
   }
 
   checkForWinner(){
