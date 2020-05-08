@@ -1,40 +1,39 @@
 class Menu{
-  constructor(selector){
-    this.selector = selector;
+  constructor(){
     this.setupMenu();
     this.setupEventListeners();
   }
   setupMenu() {
-    const $menuText = $('#menuText');
-    const $buttons = $('#buttons');
+    // const $menuText = $('#menuText');
+    const $menu = $('#menu');
     const title = $('<h1>Connect 4</h1>');
 
-    $menuText.append(title);
+    $menu.append(title);
     const instruction = $('<h2>Choose a gamemode:</h2>');
-    $menuText.append(instruction);
+    $menu.append(instruction);
     
-    const normalButton = $('<button type="button">Normal</button>')
-      .addClass('normalButton');
-    $buttons.append(normalButton);
-
-    const timedButton = $('<button type="button">Timed</button>')
-      .addClass('timedButton');
-    $buttons.append(timedButton);
+    const $menuButtons = $('<div id="menuButtons"></div>');
+    const normalButton = $('<button id="normalButton">Normal</button>')
+      .addClass('normalButton')
+    $menuButtons.append(normalButton);
+    const $timedButton = $('<button id="timedButton">Timed</button>')
+      .addClass('timedButton')
+    $menuButtons.append($timedButton);
+    $menu.append($menuButtons);
   }
   setupEventListeners() {
-    const $menuText = $('#menuText');
-    const $buttons = $('#buttons');
-    $buttons.on('click', '.normalButton', function() {
+    const $menu = $('#menu');
+    $menu.on('click', '.normalButton', function() {
+      const $menu = $('#menu');
       connect4.changeMode('normal');
-      $menuText.empty();
-      $buttons.empty();
+      $menu.empty();
       connect4.createGrid();
       connect4.createGameButtons();
     });
 
-    $buttons.on('click', '.timedButton', function() {
-      $menuText.empty();
-      $buttons.empty();
+    $menu.on('click', '.timedButton', function() {
+      const $menu = $('#menu');
+      $menu.empty();
       connect4.changeMode('timed');
       connect4.createGrid();
       connect4.createGameButtons();

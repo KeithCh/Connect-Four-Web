@@ -1,6 +1,8 @@
 body {
   text-align: center;
   background-color: rgb(233, 233, 233);
+  display: block;
+  justify-content: center;
 }
 
 #connect4 {
@@ -43,15 +45,11 @@ body {
   background-color: rgb(255, 238, 139);
 }
 
-#menuText{
-  padding-top: 15%;
-}
-
-#menuText:empty{
-  padding-top: 3%;
-}
 
 #restartButton{
+  transition-duration: 0.2s;
+  background-color: transparent;
+  border: thin solid black;
   margin-top: 10px;
 }
 
@@ -60,6 +58,9 @@ body {
 }
 
 #changeModeButton{
+  transition-duration: 0.2s;
+  background-color: transparent;
+  border: thin solid black;
   margin-top: 10px;
 }
 
@@ -67,8 +68,66 @@ body {
   display: none;
 }
 
+#restartButton:hover {
+  color:white;
+  background-color: #1979a9; 
+}
+
+#changeModeButton:hover {
+  color:white;
+  background-color: #1979a9;
+}
+
 #game {
   display: inline-block;
   width: 800px;
   text-align: center;
+  justify-content: center;
 }
+
+#menu{
+  margin-top: 15%;
+  border-radius: 25px;
+  width: max-content;
+  border: solid #0a567c;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-bottom: 25px;
+}
+
+#menu:empty{
+  margin-top: 0%;
+  border: none;
+  display: none;
+} 
+
+#menuText{
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+#menuButtons{
+  margin-right: auto;
+  margin-left: auto;
+}
+#normalButton{
+  transition-duration: 0.2s;
+  background-color: transparent;
+  border: thin solid black;
+}
+#timedButton{
+  transition-duration: 0.2s;
+  background-color: transparent;
+  border: thin solid black;
+}
+
+#normalButton:hover {
+  color:white;
+  background-color: #1979a9; 
+}
+
+#timedButton:hover {
+  color:white;
+  background-color: #1979a9;
