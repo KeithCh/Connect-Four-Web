@@ -25,6 +25,7 @@ class Menu{
     const $menuText = $('#menuText');
     const $buttons = $('#buttons');
     $buttons.on('click', '.normalButton', function() {
+      connect4.changeMode('normal');
       $menuText.empty();
       $buttons.empty();
       connect4.createGrid();
