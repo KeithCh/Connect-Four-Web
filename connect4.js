@@ -30,12 +30,12 @@ class Connect4 {
     }
   }
   createGameButtons() {
-    const $restartButton = $(restartButton);
+    const $restartButton = $('#restartButton');
     $restartButton.append('Restart');
-    const $changeModeButton = $(changeModeButton);
+    const $changeModeButton = $('#changeModeButton');
     $changeModeButton.append('Change Mode');
   }
-
+  
   setupEventListeners(){
     const $game = $('#game');
     const $board = $(this.selector);
@@ -43,6 +43,7 @@ class Connect4 {
     const that = this;
     const $restartButton = $(restartButton);
     const $changeModeButton = $(changeModeButton);
+    const $timer  = $('#timer');
     function findLastEmptyCell(col) {
       const cells = $(`.col[data-col-idx='${col}']`);
       for (let i = cells.length - 1; i > -1; i--) {
@@ -65,11 +66,16 @@ class Connect4 {
         $board.off('mouseenter', '.col.empty', hoverCol);
         $board.off('mouseleave', '.col', hoverLeaveCol);
         $board.off("click", '.col.empty', boardClick);
+        clearInterval(timer.interval);
+        $timer.empty();
         return;
       }
       that.player = (that.player === 'Red') ? 'Yellow' : 'Red';
       $gameInstruction.text(`${that.player}'s turn`);
       $(that).trigger('mouseenter');
+      clearInterval(timer.interval);
+      $timer.empty();
+      timer.setupTimer();
     }
     function hoverCol() {
       const col = $(this).data('col-idx');
@@ -92,6 +98,9 @@ class Connect4 {
         $board.on('click', '.col.empty', boardClick);
       }
       $board.empty();
+      clearInterval(timer.interval);
+      $timer.empty();
+      timer.setupTimer();
       that.player = that.player1;
       $gameInstruction.empty();
       that.createGrid();
@@ -103,6 +112,8 @@ class Connect4 {
         $board.on('mouseleave', '.col', hoverLeaveCol);
         $board.on('click', '.col.empty', boardClick);
       }
+      clearInterval(timer.interval);
+      $timer.empty();
       $board.empty();
       $gameInstruction.empty();
       $changeModeButton.empty();
